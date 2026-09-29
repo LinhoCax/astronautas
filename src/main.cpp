@@ -464,58 +464,170 @@ void Agencia::finalizarVoo(int codigo) {
 
 }
 
+void Agencia::listarVoos() {
+
+    cout << "LISTA DE VOOS" << endl;
+    cout << endl;
+
+    string estados[4] = {
+        "planejado",
+        "em curso",
+        "finalizado com sucesso",
+        "finalizado com explosao"
+    };
+
+    for (int e = 0; e < 4; e++) {
+
+        cout << "== " << estados[e] << " ==" << endl;
+        cout << endl;
+
+        bool encontrou = false;
+
+        for (Voo voo : voos) {
+
+            if (voo.getEstado() == estados[e]) {
+
+                encontrou = true;
+
+                cout << "Voo " << voo.getCodigo() << ": ";
+
+                if (voo.getQuantidadeAstronautas() == 0) {
+
+                    cout << "sem astronautas" << endl;
+
+                } else {
+
+                    for (int i = 0; i < voo.getQuantidadeAstronautas(); i++) {
+
+                        string cpf = voo.getCpf(i);
+                        int posA = buscarAstronauta(cpf);
+
+                        if (i > 0) {
+                            cout << ", ";
+                        }
+
+                        cout << astronautas[posA].getCpf() << " "
+                             << astronautas[posA].getNome();
+                    }
+
+                    cout << endl;
+                }
+            }
+        }
+
+        if (!encontrou) {
+            cout << "(nenhum)" << endl;
+        }
+
+        cout << endl;
+    }
+}
+
+void Agencia::listarMortos() {
+
+    cout << "ASTRONAUTAS MORTOS" << endl;
+    cout << endl;
+
+    bool encontrou = false;
+
+    for (Astronauta astronauta : astronautas) {
+
+        if (!astronauta.estaVivo()) {
+
+            encontrou = true;
+
+            cout << astronauta.getCpf() << " "
+                 << astronauta.getNome()
+                 << " - voos:";
+
+            bool participou = false;
+
+            for (Voo voo : voos) {
+
+                if (voo.temAstronauta(astronauta.getCpf()) &&
+                    voo.getEstado() != "planejado") {
+
+                    cout << " " << voo.getCodigo();
+                    participou = true;
+                }
+            }
+
+            if (!participou) {
+                cout << " nenhum";
+            }
+
+            cout << endl;
+        }
+    }
+
+    if (!encontrou) {
+        cout << "(nenhum)" << endl;
+    }
+}
+
 int main() {
-    // TODO: criar a Agencia aqui, por exemplo:  Agencia agencia;
+    Agencia agencia;
+
     string comando;
 
     while (cin >> comando) {   // le uma palavra; para no FIM ou quando a entrada acaba
         if (comando == "FIM") {
             break;
+
         } else if (comando == "CADASTRAR_ASTRONAUTA") {
             string cpf, nome;
             int idade;
             cin >> cpf >> idade;
             getline(cin >> ws, nome);   // o nome vem por ultimo e pode ter espacos
             cout << "TODO " << comando << endl;
-            // TODO: agencia.cadastrarAstronauta(cpf, nome, idade);
+            agencia.cadastrarAstronauta(cpf, nome, idade);
+
         } else if (comando == "CADASTRAR_VOO") {
             int codigo;
             cin >> codigo;
             cout << "TODO " << comando << endl;
-            // TODO: agencia.cadastrarVoo(codigo);
+            agencia.cadastrarVoo(codigo);
+
         } else if (comando == "ADICIONAR_ASTRONAUTA") {
             string cpf;
             int codigo;
             cin >> cpf >> codigo;
             cout << "TODO " << comando << endl;
-            // TODO: agencia.adicionarAstronauta(cpf, codigo);
+            agencia.adicionarAstronauta(cpf, codigo);
+
         } else if (comando == "REMOVER_ASTRONAUTA") {
             string cpf;
             int codigo;
             cin >> cpf >> codigo;
             cout << "TODO " << comando << endl;
-            // TODO: agencia.removerAstronauta(cpf, codigo);
+            agencia.removerAstronauta(cpf, codigo);
+
         } else if (comando == "LANCAR_VOO") {
             int codigo;
             cin >> codigo;
             cout << "TODO " << comando << endl;
-            // TODO: agencia.lancarVoo(codigo);
+            agencia.lancarVoo(codigo);
+
         } else if (comando == "EXPLODIR_VOO") {
             int codigo;
             cin >> codigo;
             cout << "TODO " << comando << endl;
-            // TODO: agencia.explodirVoo(codigo);
+            agencia.explodirVoo(codigo);
+
         } else if (comando == "FINALIZAR_VOO") {
             int codigo;
             cin >> codigo;
             cout << "TODO " << comando << endl;
-            // TODO: agencia.finalizarVoo(codigo);
+            agencia.finalizarVoo(codigo);
+
         } else if (comando == "LISTAR_VOOS") {
             cout << "TODO " << comando << endl;
-            // TODO: agencia.listarVoos();
+            agencia.listarVoos();
+
         } else if (comando == "LISTAR_MORTOS") {
             cout << "TODO " << comando << endl;
-            // TODO: agencia.listarMortos();
+            agencia.listarMortos();
+
         } else {
             cout << "ERRO: comando desconhecido " << comando << endl;
         }
