@@ -21,7 +21,7 @@ private:
 
 public:
 
-    Astronauta(string cpf, string nome, int idade);
+    Astronauta(const string& cpf, const string& nome, int idade);
 
     string getCpf();
     string getNome();
@@ -34,7 +34,7 @@ public:
     void morrer();
 };
 
-Astronauta::Astronauta(string cpf, string nome, int idade) {
+Astronauta::Astronauta(const string& cpf, const string& nome, int idade) {
 
     this->cpf = cpf;
     this->nome = nome;
@@ -104,10 +104,10 @@ public:
     string getEstado();
     int getQuantidadeAstronautas();
     string getCpf(int posicao);
-    bool temAstronauta(string cpf);
+    bool temAstronauta(const string& cpf);
 
-    void adicionarAstronauta(string cpf);
-    bool removerAstronauta(string cpf);
+    void adicionarAstronauta(const string& cpf);
+    bool removerAstronauta(const string& cpf);
 
     void lancar();
     void explodir();
@@ -140,7 +140,7 @@ string Voo::getCpf(int posicao) {
     return cpfs[posicao];
 }
 
-bool Voo::temAstronauta(string cpf) {
+bool Voo::temAstronauta(const string& cpf) {
 
     for (string c : cpfs) {
 
@@ -153,12 +153,12 @@ bool Voo::temAstronauta(string cpf) {
     return false;
 }
 
-void Voo::adicionarAstronauta(string cpf) {
+void Voo::adicionarAstronauta(const string& cpf) {
 
     cpfs.push_back(cpf);
 }
 
-bool Voo::removerAstronauta(string cpf) {
+bool Voo::removerAstronauta(const string& cpf) {
 
     for (int i = 0; i < cpfs.size(); i++) {
 
@@ -196,16 +196,16 @@ private:
     vector<Astronauta> astronautas;
     vector<Voo> voos;
 
-    int buscarAstronauta(string cpf);
+    int buscarAstronauta(const string& cpf);
     int buscarVoo(int codigo);
 
 public:
 
-    void cadastrarAstronauta(string cpf, string nome, int idade);
+    void cadastrarAstronauta(const string& cpf, const string& nome, int idade);
     void cadastrarVoo(int codigo);
 
-    void adicionarAstronauta(string cpf, int codigo);
-    void removerAstronauta(string cpf, int codigo);
+    void adicionarAstronauta(const string& cpf, int codigo);
+    void removerAstronauta(const string& cpf, int codigo);
 
     void lancarVoo(int codigo);
     void explodirVoo(int codigo);
@@ -215,7 +215,7 @@ public:
     void listarMortos();
 };
 
-int Agencia::buscarAstronauta(string cpf) {
+int Agencia::buscarAstronauta(const string& cpf) {
 
     for (int i = 0; i < astronautas.size(); i++) {
 
@@ -241,7 +241,7 @@ int Agencia::buscarVoo(int codigo) {
     return -1;
 }
 
-void Agencia::cadastrarAstronauta(string cpf, string nome, int idade) {
+void Agencia::cadastrarAstronauta(const string& cpf, const string& nome, int idade) {
 
     if (buscarAstronauta(cpf) != -1) {
 
@@ -269,7 +269,7 @@ void Agencia::cadastrarVoo(int codigo) {
     cout << "OK: voo " << codigo << " cadastrado" << endl;
 }
 
-void Agencia::adicionarAstronauta(string cpf, int codigo) {
+void Agencia::adicionarAstronauta(const string& cpf, int codigo) {
 
     int posA = buscarAstronauta(cpf);
 
@@ -317,7 +317,7 @@ void Agencia::adicionarAstronauta(string cpf, int codigo) {
          << " adicionado ao voo " << codigo << endl;
 }
 
-void Agencia::removerAstronauta(string cpf, int codigo) {
+void Agencia::removerAstronauta(const string& cpf, int codigo) {
 
     int posA = buscarAstronauta(cpf);
 
